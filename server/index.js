@@ -5,6 +5,7 @@ import { User, Purchase} from './models/models.js';
 import cors from 'cors';
 import router from '../server/routes/index.js';
 import errorHandler from '../server/middleware/ErrorHandlingMiddleware.js';
+import authMiddleware from './middleware/authMiddleware.js';
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api', router);
+app.use(authMiddleware);
 
 app.use(errorHandler);
 

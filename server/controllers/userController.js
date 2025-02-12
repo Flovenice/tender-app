@@ -28,18 +28,19 @@ class UserController{
         const {email, password} = req.body;
         const user = await User.findOne({where: {email}});
         if (!user) {
-            return next(ApiError.badRequest('Неверный email'));
+            return next(ApiError.badRequest('Пользователь не найден'));
         }
         const encodedPassword = bcrypt.compareSync(password, user.password);
         if (!encodedPassword) {
             return next(ApiError.badRequest('Неверный пароль'));
         }
-        const token = generateJwt(user.id, user.email, user.password);
+        const token = generateJwt(user.id, user.email, user.role);
         return res.json({token});
     }
 
     async check(req, res, next) {
-        
+        const token = generateJwt(req.user.id, req.user.email, req.user.role);
+        return res.json({token});
     }
 
     async delete(req, res, next) {
