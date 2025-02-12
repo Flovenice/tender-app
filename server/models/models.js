@@ -27,4 +27,4 @@ const Purchase = sequelize.define('purchase', {
 User.hasMany(Purchase);
 Purchase.belongsTo(User);
 
-export default {User, Purchase};
+export {User, Purchase};

@@ -1,4 +1,4 @@
-import Purchase from '../models/models.js';
+import { Purchase } from '../models/models.js';
 
 class PurchaseController{
     async create(req, res) {

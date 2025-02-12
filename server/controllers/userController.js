@@ -2,7 +2,8 @@ import ApiError from "../error/ApiError.js";
 
 class UserController{
     async registration(req, res) {
-
+        const {email, password, role} = req.query;
+        
     }
 
     async login(req, res) {

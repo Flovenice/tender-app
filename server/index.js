@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import sequelize from './db.js';
-import models from './models/models.js';
+import { User, Purchase} from './models/models.js';
 import cors from 'cors';
 import router from '../server/routes/index.js';
 import errorHandler from '../server/middleware/ErrorHandlingMiddleware.js';
