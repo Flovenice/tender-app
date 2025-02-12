@@ -1,5 +1,5 @@
 import ApiError from "../error/ApiError.js";
-import { Purchase, User } from '../models/models.js';
+import { User } from '../models/models.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -24,16 +24,35 @@ class UserController{
         return res.json({token});
     }
 
-    async login(req, res) {
-
+    async login(req, res, next) {
+        const {email, password} = req.body;
+        const user = await User.findOne({where: {email}});
+        if (!user) {
+            return next(ApiError.badRequest('Неверный email'));
+        }
+        const encodedPassword = bcrypt.compareSync(password, user.password);
+        if (!encodedPassword) {
+            return next(ApiError.badRequest('Неверный пароль'));
+        }
+        const token = generateJwt(user.id, user.email, user.password);
+        return res.json({token});
     }
 
     async check(req, res, next) {
-        const {id} = req.query;
+        
+    }
+
+    async delete(req, res, next) {
+        const {id} = req.body;
         if (!id) {
-            return next(ApiError.badRequest('ID not defined!'));
+            return next(ApiError.badRequest('ID не задан'));
         }
-        res.json(id);
+        const candidate = await User.findOne({where: {id}});
+        if (!candidate) {
+            return next(ApiError.badRequest('Пользователь не существует'));
+        }
+        User.destroy({where: {id}});
+        res.json(`Пользователь с ID ${id} успешно удален!`);
     }
 }
 
