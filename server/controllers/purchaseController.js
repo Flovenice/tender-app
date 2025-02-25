@@ -4,8 +4,8 @@ import { Purchase } from '../models/models.js';
 class PurchaseController{
     async create(req, res, next) {
         try {
-            const {id, purchaser, item, number, price, law, link, method, expire_date, platform, application_securing, contract_securing, contact} = req.body;
-            const purchase = await Purchase.create({id, purchaser, item, number, price, law, link, method, expire_date, platform, application_securing, contract_securing, contact});
+            const {id, purchaser, item, number, price, law, link, method, expire_date, platform, application_securing, contract_securing, contact, status} = req.body;
+            const purchase = await Purchase.create({id, purchaser, item, number, price, law, link, method, expire_date, platform, application_securing, contract_securing, contact, status});
             return res.json(purchase);
         } catch (e) {
             next(ApiError.badRequest(e.message));

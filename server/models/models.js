@@ -21,7 +21,8 @@ const Purchase = sequelize.define('purchase', {
     platform: {type: DataTypes.STRING},
     application_securing: {type: DataTypes.FLOAT},
     contract_securing: {type: DataTypes.FLOAT},
-    contact: {type: DataTypes.STRING}
+    contact: {type: DataTypes.STRING},
+    status: {type: DataTypes.STRING, defaultValue: "CURRENT"}
 })
 
 User.hasMany(Purchase);
